@@ -135,13 +135,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\buffer.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\shader.cpp" />
     <ClCompile Include="src\window.cpp" />
     <ClCompile Include="thirdparty\GLAD\src\glad.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\buffer.h" />
     <ClInclude Include="src\log.h" />
+    <ClInclude Include="src\shader.h" />
     <ClInclude Include="src\window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shaders\frag.glsl" />
+    <None Include="src\shaders\vert.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
