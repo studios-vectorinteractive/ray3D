@@ -4,20 +4,21 @@
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+#include "core/core.h"
 
 namespace ray3D
 {
 	class window
 	{
 	public:
-		window(const uint32_t Width, const uint32_t Height, const std::string& Title);
+		window(const ui32 Width, const ui32 Height, const std::string& Title);
 		~window();
 
 		auto run() -> void;
 
 		//Getters
-		auto getWidth() const -> uint32_t{ return mWidth; }
-		auto getHeight() const -> uint32_t{ return mHeight; }
+		auto getWidth() const -> ui32 { return mWidth; }
+		auto getHeight() const -> ui32 { return mHeight; }
 
 		auto getGLFWwindow() const -> GLFWwindow* { return mWindow; }
 		auto getGLFWwindow() -> GLFWwindow* { return mWindow; }
@@ -25,8 +26,8 @@ namespace ray3D
 
 	private:
 		std::string mTitle = {};
-		uint32_t mWidth = {};
-		uint32_t mHeight = {};
+		ui32 mWidth = {};
+		ui32 mHeight = {};
 
 		GLFWwindow* mWindow = {};
 	};

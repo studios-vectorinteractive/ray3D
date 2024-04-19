@@ -1,17 +1,17 @@
 #include <iostream>
 #include <memory>
 
-#include "window.h"
-#include "log.h"
+#include "core/window.h"
+#include "core/core.h"
 
 int main()
 {
 
 	std::unique_ptr<ray3D::window> app = std::make_unique<ray3D::window>(800, 600, "Ray3D");
 
-	LOG("Window width : %d", app->getWidth());
-	LOG("Window height : %d", app->getHeight());
-	LOG("Window Title : %s", app->getTitle().c_str());
+	R3D_LOGI("Window width : {}", app->getWidth());
+	R3D_LOGI("Window height : {}", app->getHeight());
+	R3D_LOGI("Window Title : {}", app->getTitle().c_str());
 
 	app->run();
 

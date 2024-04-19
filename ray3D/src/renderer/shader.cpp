@@ -6,11 +6,11 @@
 #include <glad/glad.h>
 
 #include "shader.h"
-#include "log.h"
+#include "core/core.h"
 
 namespace ray3D
 {
-	enum class ShaderType
+	enum class shaderType
 	{
 		Vertex,
 		Fragment
@@ -20,18 +20,18 @@ namespace ray3D
 	{
 		if (!std::filesystem::exists(vertShaderPath) || !std::filesystem::exists(fragShaderPath))
 		{
-			LOG("Invalid vertex or fragment shader file path!");
+			R3D_LOGE("Invalid vertex or fragment shader file path!");
 			return;
 		}
 
 		GLuint fragShaderID, vertShaderID;
 
-		vertShaderID = compileShader(vertShaderPath, ShaderType::Vertex);
-		fragShaderID = compileShader(fragShaderPath, ShaderType::Fragment);
+		vertShaderID = compileShader(vertShaderPath, shaderType::Vertex);
+		fragShaderID = compileShader(fragShaderPath, shaderType::Fragment);
 
 		if (!vertShaderID || !fragShaderID)
 		{
-			LOG("Failed to compile shaders!");
+			R3D_LOGE("Failed to compile shaders!");
 			return;
 		}
 
@@ -41,14 +41,14 @@ namespace ray3D
 		glAttachShader(mShaderID, fragShaderID);
 		glLinkProgram(mShaderID);
 
-		int status = 0;
+		i32 status = 0;
 		std::vector<char> programLinkLog(512, 0);
 
 		glGetProgramiv(mShaderID, GL_LINK_STATUS, &status);
 		if (!status)
 		{
 			glGetProgramInfoLog(mShaderID, programLinkLog.size(), nullptr, programLinkLog.data());
-			LOG("Program Linking Error : %s", programLinkLog.data());
+			R3D_LOGE("Program Linking Error : %s", programLinkLog.data());
 			return;
 		}
 
@@ -66,7 +66,7 @@ namespace ray3D
 		glUseProgram(mShaderID);
 	}
 
-	uint32_t shader::compileShader(const std::string& shaderFilePath, const ShaderType shaderType)
+	uint32_t shader::compileShader(const std::string& shaderFilePath, const shaderType shaderType)
 	{
 		GLuint ShaderID = {};
 		std::ifstream shaderFileStream(shaderFilePath, std::ios::binary);
@@ -74,22 +74,22 @@ namespace ray3D
 
 		if (!shaderFileStream.is_open())
 		{
-			LOG("Failed to open shader file! : %s", shaderFilePath.c_str());
+			R3D_LOGE("Failed to open shader file! : %s", shaderFilePath.c_str());
 			return 0;
 		}
 
 		GLuint glShaderType = 0;
 		switch (shaderType)
 		{
-		case ShaderType::Vertex: glShaderType = GL_VERTEX_SHADER; break;
-		case ShaderType::Fragment: glShaderType = GL_FRAGMENT_SHADER; break;
+		case shaderType::Vertex: glShaderType = GL_VERTEX_SHADER; break;
+		case shaderType::Fragment: glShaderType = GL_FRAGMENT_SHADER; break;
 		default:
 			break;
 		}
 
 		if (glShaderType == 0)
 		{
-			LOG("Invalid Shader Type");
+			R3D_LOGE("Invalid Shader Type");
 			return 0;
 		}
 
@@ -102,14 +102,14 @@ namespace ray3D
 		glShaderSource(ShaderID, 1, &shaderSourceChar, nullptr);
 		glCompileShader(ShaderID);
 
-		int status = 0;
+		i32 status = 0;
 		std::vector<char> shaderCompilationLog(512, 0);
 
 		glGetShaderiv(ShaderID, GL_COMPILE_STATUS, &status);
 		if (!status)
 		{
 			glGetShaderInfoLog(ShaderID, shaderCompilationLog.size(), nullptr, shaderCompilationLog.data());
-			LOG("Vertex Shader Compilation Error : %s", shaderCompilationLog.data());
+			R3D_LOGE("Vertex Shader Compilation Error : %s", shaderCompilationLog.data());
 			return 0;
 		}
 
