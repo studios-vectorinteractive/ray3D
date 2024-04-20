@@ -13,6 +13,11 @@ namespace ray3D
 
 		static auto getLogger() -> std::shared_ptr<spdlog::logger>& { return mLogger; }
 
+		//deleted functions
+		logger() = delete;
+		logger(const logger&) = delete;
+		logger& operator=(const logger&) = delete;
+
 	private:
 		static inline bool mInitialized = false;
 		static inline std::shared_ptr<spdlog::logger> mLogger = {};

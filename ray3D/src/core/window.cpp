@@ -7,6 +7,7 @@
 #include "window.h"
 #include "renderer/shader.h"
 #include "core/core.h"
+#include "event/eventManager.h"
 
 #include "renderer/buffer.h"
 
@@ -15,8 +16,8 @@ namespace ray3D
 	window::window(const ui32 Width, const ui32 Height, const std::string& Title):
 		mWidth(Width), mHeight(Height), mTitle(Title)
 	{
-
 		logger::init();
+		eventManager::init();
 
 		if (!glfwInit())
 		{
@@ -47,10 +48,30 @@ namespace ray3D
 			glfwTerminate();
 			return;
 		}
+
+		//glfw events
+		glfwSetWindowSizeCallback(mWindow, [](GLFWwindow* window, int width, int height) 
+			{
+				std::shared_ptr<windowResizeEvent> event = std::make_shared<windowResizeEvent>(_ui32(width), _ui32(height));
+				eventManager::pushEvent(event);
+			});
+
+		glfwSetWindowCloseCallback(mWindow, [](GLFWwindow* window) 
+			{
+				std::shared_ptr<windowCloseEvent> event = std::make_shared<windowCloseEvent>();
+				eventManager::pushEvent(event);
+			});
+
+		//Events callbacks
+		eventManager::addCallback<eventType::windowResizeEvent>(std::bind(&window::onWindowResize, this, std::placeholders::_1));
+		eventManager::addCallback<eventType::windowCloseEvent>(std::bind(&window::onWindowClose, this, std::placeholders::_1));
+
+		mIsRunning = true;
 	}
 
 	window::~window()
 	{
+		eventManager::shutdown();
 		logger::shutdown();
 		glfwDestroyWindow(mWindow);
 		glfwTerminate();
@@ -83,8 +104,9 @@ namespace ray3D
 
 		glViewport(0, 0, mWidth, mHeight);
 
-		while (!glfwWindowShouldClose(mWindow))
+		while (mIsRunning)
 		{
+			eventManager::dispatchEvents();
 			glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
@@ -97,5 +119,29 @@ namespace ray3D
 			glfwSwapBuffers(mWindow);
 			glfwPollEvents();
 		}
+	}
+
+	auto window::onWindowResize(const event* resizeEvent) -> void
+	{
+		const windowResizeEvent* incResizeEvent = getEventFromBase<windowResizeEvent>(resizeEvent);
+		ui32 newWidth = incResizeEvent->getWidth();
+		ui32 newHeight = incResizeEvent->getHeight();
+
+		if (newWidth == 0 || newHeight == 0)
+		{
+			R3D_LOGD("Window minimized!");
+			return;
+		}
+
+		mWidth = newWidth;
+		mHeight = newHeight;
+		glViewport(0, 0, _ui64(mWidth), _ui64(mHeight));
+		R3D_LOGD("Window resized to : [{}, {}]", mWidth, mHeight);
+	}
+
+	auto window::onWindowClose(const event* closeEvent) -> void
+	{
+		R3D_LOGD("onWindowClose invoked");
+		mIsRunning = false;
 	}
 }

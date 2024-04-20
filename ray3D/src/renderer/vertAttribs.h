@@ -151,8 +151,8 @@ namespace ray3D
 			for (auto& element : mBufferElements)
 			{
 				element.offset = offset;
-				offset += element.elementSize;
-				mStride += element.elementSize;
+				offset += _ui32(element.elementSize);
+				mStride += _ui32(element.elementSize);
 			}
 		}
 

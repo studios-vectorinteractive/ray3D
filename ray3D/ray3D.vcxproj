@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\core\event\eventManager.cpp" />
     <ClCompile Include="src\core\logger.cpp" />
     <ClCompile Include="src\renderer\buffer.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -144,6 +145,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\core\core.h" />
+    <ClInclude Include="src\core\event\event.h" />
+    <ClInclude Include="src\core\event\eventManager.h" />
     <ClInclude Include="src\core\types.h" />
     <ClInclude Include="src\renderer\buffer.h" />
     <ClInclude Include="src\core\logger.h" />

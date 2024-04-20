@@ -5,6 +5,7 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include "core/core.h"
+#include "event/event.h"
 
 namespace ray3D
 {
@@ -24,10 +25,15 @@ namespace ray3D
 		auto getGLFWwindow() -> GLFWwindow* { return mWindow; }
 		auto getTitle() const -> const std::string& { return mTitle; }
 
+		//Events
+		auto onWindowResize(const event* resizeEvent) -> void;
+		auto onWindowClose(const event* closeEvent) -> void;
+
 	private:
 		std::string mTitle = {};
 		ui32 mWidth = {};
 		ui32 mHeight = {};
+		bool mIsRunning = false;
 
 		GLFWwindow* mWindow = {};
 	};
