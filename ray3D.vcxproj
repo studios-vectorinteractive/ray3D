@@ -40,7 +40,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)thirdparty\GLFW\include;$(SolutionDir)thirdparty\GLAD\include;$(SolutionDir)thirdparty\spdlog\include;$(SolutionDir)thirdparty\glm;$(SolutionDir)src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)thirdparty\GLFW\include;$(SolutionDir)thirdparty\GLAD\include;$(SolutionDir)thirdparty\spdlog\include;$(SolutionDir)thirdparty\glm;$(SolutionDir)ray3D\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -113,6 +113,12 @@
       <AdditionalLibraryDirectories>$(SolutionDir)thirdparty\GLFW\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <Lib>
+      <AdditionalDependencies>glfw3.lib;</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)thirdparty\GLFW\lib-vc2022;</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -135,24 +141,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\core\event\eventManager.cpp" />
-    <ClCompile Include="src\core\logger.cpp" />
-    <ClCompile Include="src\renderer\buffer.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\renderer\shader.cpp" />
-    <ClCompile Include="src\core\window.cpp" />
+    <ClCompile Include="ray3D\src\core\engineApp.cpp" />
+    <ClCompile Include="ray3D\src\core\event\eventManager.cpp" />
+    <ClCompile Include="ray3D\src\core\logger.cpp" />
+    <ClCompile Include="ray3D\src\core\time.cpp" />
+    <ClCompile Include="ray3D\src\core\window.cpp" />
+    <ClCompile Include="ray3D\src\entry.h" />
+    <ClCompile Include="ray3D\src\renderer\buffer.cpp" />
+    <ClCompile Include="ray3D\src\renderer\shader.cpp" />
     <ClCompile Include="thirdparty\GLAD\src\glad.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\core\core.h" />
-    <ClInclude Include="src\core\event\event.h" />
-    <ClInclude Include="src\core\event\eventManager.h" />
-    <ClInclude Include="src\core\types.h" />
-    <ClInclude Include="src\renderer\buffer.h" />
-    <ClInclude Include="src\core\logger.h" />
-    <ClInclude Include="src\renderer\shader.h" />
-    <ClInclude Include="src\core\window.h" />
-    <ClInclude Include="src\renderer\vertAttribs.h" />
+    <ClInclude Include="ray3D\src\core\core.h" />
+    <ClInclude Include="ray3D\src\core\engineApp.h" />
+    <ClInclude Include="ray3D\src\core\event\event.h" />
+    <ClInclude Include="ray3D\src\core\event\eventManager.h" />
+    <ClInclude Include="ray3D\src\core\logger.h" />
+    <ClInclude Include="ray3D\src\core\time.h" />
+    <ClInclude Include="ray3D\src\core\types.h" />
+    <ClInclude Include="ray3D\src\core\window.h" />
+    <ClInclude Include="ray3D\src\renderer\buffer.h" />
+    <ClInclude Include="ray3D\src\renderer\shader.h" />
+    <ClInclude Include="ray3D\src\renderer\vertAttribs.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\frag.glsl" />

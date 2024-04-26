@@ -30,11 +30,6 @@ namespace ray3D
 		mInitialized = false;
 	}
 
-	auto eventManager::pushEvent(std::shared_ptr<event> IncEvent) -> void
-	{
-		mEventQueue.emplace(IncEvent);
-	}
-
 	auto eventManager::dispatchEvents() -> void
 	{
 		if (mEventQueue.empty())
@@ -44,18 +39,19 @@ namespace ray3D
 
 		while (!mEventQueue.empty())
 		{
-			std::shared_ptr<event>& incEvent = mEventQueue.front();
+			std::unique_ptr<event>& incEvent = mEventQueue.front();
 			eventType incEventType = incEvent->getEventType();
 
 			if (mInvocationList.find(incEventType) != mInvocationList.end())
 			{
 				for (eventCallbackFn& callbacks : mInvocationList[incEventType])
 				{
-					callbacks(incEvent.get());
+					callbacks(*incEvent);
 					incEvent->isHandled = true;
-					mEventQueue.pop();
 				}
 			}
+
+			mEventQueue.pop();
 		}
 	}
 }

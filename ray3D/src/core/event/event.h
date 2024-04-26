@@ -3,6 +3,8 @@
 #include <glm/glm.hpp>
 #include "core/core.h"
 
+#define BIND_EVENT(t, x)	eventManager::addCallback<t>(std::bind(x, this, std::placeholders::_1));
+
 namespace ray3D
 {
 
@@ -149,9 +151,9 @@ namespace ray3D
 	};
 
 	template<class t_event>
-	inline auto getEventFromBase(const event* incEvent) -> const t_event*
+	inline auto getEventFromBase(const event& incEvent) -> const t_event&
 	{
 		//TODO: additional safety checks required
-		return static_cast<const t_event*>(incEvent);
+		return static_cast<const t_event&>(incEvent);
 	}
 }

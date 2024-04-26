@@ -2,6 +2,7 @@
 #include <queue>
 #include <vector>
 #include <memory>
+#include <utility>
 #include <functional>
 #include <unordered_map>
 
@@ -10,7 +11,7 @@
 
 namespace ray3D
 {
-	using eventCallbackFn = std::function<void(event*)>;
+	using eventCallbackFn = std::function<void(event&)>;
 
 	class eventManager
 	{
@@ -25,15 +26,14 @@ namespace ray3D
 			mInvocationList[t_event].emplace_back(callback);
 		}
 
-		static auto pushEvent(std::shared_ptr<event> IncEvent) -> void;
-
-		//deleted functions
-		eventManager() = delete;
-		eventManager(const eventManager&) = delete;
-		eventManager& operator=(const eventManager&) = delete;
+		template<class t_event, class... t_args>
+		static auto pushEvent(t_args... args) -> void
+		{
+			mEventQueue.emplace(std::make_unique<t_event>(std::forward<t_args>(args)...));
+		}
 
 	private:
-		static inline std::queue<std::shared_ptr<event>> mEventQueue = {};
+		static inline std::queue<std::unique_ptr<event>> mEventQueue = {};
 		static inline std::unordered_map<eventType, std::vector<eventCallbackFn>> mInvocationList = {};
 		static inline bool mInitialized = false;
 	};

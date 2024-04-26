@@ -15,45 +15,66 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="thirdparty\GLAD\src\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\window.cpp">
+    <ClCompile Include="ray3D\src\core\event\eventManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer\shader.cpp">
+    <ClCompile Include="ray3D\src\core\engineApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer\buffer.cpp">
+    <ClCompile Include="ray3D\src\core\logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\core\logger.cpp">
+    <ClCompile Include="ray3D\src\core\window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ray3D\src\renderer\buffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ray3D\src\renderer\shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ray3D\src\entry.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ray3D\src\core\time.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\core\window.h">
+    <ClInclude Include="ray3D\src\core\event\event.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\logger.h">
+    <ClInclude Include="ray3D\src\core\event\eventManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer\shader.h">
+    <ClInclude Include="ray3D\src\core\core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer\buffer.h">
+    <ClInclude Include="ray3D\src\core\engineApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\core.h">
+    <ClInclude Include="ray3D\src\core\logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\core\types.h">
+    <ClInclude Include="ray3D\src\core\types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer\vertAttribs.h">
+    <ClInclude Include="ray3D\src\core\window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ray3D\src\renderer\buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ray3D\src\renderer\shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ray3D\src\renderer\vertAttribs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ray3D\src\core\time.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
