@@ -3,9 +3,10 @@
 #include <GLFW/glfw3.h>
 
 #include "core/event/eventManager.h"
+#include "core/input/input.h"
 #include "time.h"
-#include "renderer/buffer.h"
-#include "renderer/shader.h"
+#include "renderer/renderer.h"
+
 
 namespace ray3D
 {
@@ -13,6 +14,8 @@ namespace ray3D
 	{
 		//Renderer Initialize
 		mRunning = true;
+		input::init(getGLFWwindow());
+		renderer::init(rendererBackendType::openGL, mWidth, mHeight);
 	}
 
 	auto engineApp::run() -> void
@@ -20,28 +23,6 @@ namespace ray3D
 		time::init(this);
 		mLastTime = time::elapsedTime;
 		postAppInitialize();
-
-		//Read and Create Shaders
-		shader testShader(R"(E:\Live Tutorial\ray3D\ray3D\src\shaders\vert.glsl)", R"(E:\Live Tutorial\ray3D\ray3D\src\shaders\frag.glsl)");
-
-		//Vertex
-		std::vector<f32> vertices =
-		{
-			//Position			//Color
-		-0.5f, 0.5f, 0.0f,   1.0f, 0.0f, 0.0f,		//0
-		0.5f, 0.5f, 0.0f,   0.0f, 0.2f, 0.0f,		//1
-		0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,		//2
-		-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,		//3
-		};
-
-		std::vector<ui32> indices =
-		{
-			0, 1, 3,
-			1, 2, 3
-		};
-
-		std::shared_ptr<vertexBuffer> vertBuffer = vertexBuffer::create(vertices, vertAttribLayoutType::pos_col);
-		std::shared_ptr<indexBuffer> idxBuffer = indexBuffer::create(indices);
 
 		while (mRunning)
 		{
@@ -53,17 +34,17 @@ namespace ray3D
 
 			if (!mSuspended)
 			{
+
+				f32 deltaT = _f32(deltaTime);
 				//appLayer Update
-				onUpdate(_f32(deltaTime));
+				onUpdate(deltaT);
 
-				glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
-				glClear(GL_COLOR_BUFFER_BIT);
+				renderer::beginFrame();
+				renderer::draw(deltaT);
+				renderer::endFrame();
 
-				testShader.bind();
-				vertBuffer->bind();
-				idxBuffer->bind();
-
-				glDrawElements(GL_TRIANGLES, idxBuffer->getCount(), GL_UNSIGNED_INT, 0);
+				//Input Update
+				input::update(deltaT);
 
 				swapBuffers();
 			}
@@ -88,11 +69,13 @@ namespace ray3D
 
 		mSuspended = false;
 		glViewport(0, 0, _ui64(newWidth), _ui64(newHeight));
+		renderer::onResize(newWidth, newHeight);
 		R3D_LOGD("Application resized to : [{}, {}]", newWidth, newHeight);
 	}
 
 	auto engineApp::onDestroy() -> void
 	{
+		input::shutdown();
 		mRunning = false;
 	}
 }

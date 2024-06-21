@@ -106,7 +106,7 @@ namespace ray3D
 				return
 				{
 					{shaderDataType::float3, "Position"},
-					{shaderDataType::float3, "Color"}
+					{shaderDataType::float4, "Color"}
 				};
 			}
 			case vertAttribLayoutType::pos_col_tex:
@@ -134,7 +134,7 @@ namespace ray3D
 					{shaderDataType::float2, "TexCoord"},
 					{shaderDataType::float3, "Position"},
 					{shaderDataType::float3, "Normal"},
-					{shaderDataType::float3, "Color"}
+					{shaderDataType::float4, "Color"}
 				};
 			}
 			}
@@ -174,7 +174,7 @@ namespace ray3D
 	struct posColVert
 	{
 		glm::vec3 position;
-		glm::vec3 color;
+		glm::vec4 color;
 
 		inline static auto getSize() -> ui64
 		{
@@ -211,7 +211,7 @@ namespace ray3D
 		glm::vec2 tex;
 		glm::vec3 position;
 		glm::vec3 normal;
-		glm::vec3 color;
+		glm::vec4 color;
 
 		inline static auto getSize() -> ui64
 		{

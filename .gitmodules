@@ -1,6 +1,12 @@
-[submodule "ray3D/thirdparty/spdlog"]
-	path = ray3D/thirdparty/spdlog
-	url = https://github.com/gabime/spdlog.git
 [submodule "ray3D/thirdparty/glm"]
 	path = ray3D/thirdparty/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "thirdparty/spdlog"]
+	path = thirdparty/spdlog
+	url = https://github.com/gabime/spdlog.git
+[submodule "thirdparty/glfw"]
+	path = thirdparty/glfw
+	url = https://github.com/studios-vectorinteractive/glfw.git
+[submodule "thirdparty/stb"]
+	path = thirdparty/stb
+	url = https://github.com/nothings/stb.git

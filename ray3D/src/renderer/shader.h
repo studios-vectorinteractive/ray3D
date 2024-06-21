@@ -3,6 +3,7 @@
 #include <stdint.h>
 
 #include <glad/glad.h>
+#include <glm/glm.hpp>
 #include "core/core.h"
 
 namespace ray3D
@@ -89,6 +90,19 @@ namespace ray3D
 
 		auto getShaderProgramID() const ->ui32 { return mShaderID; }
 		auto bind() -> void;
+
+		auto setUniformFloat(const char* name, f32 val) -> void;
+		auto setUniformInt(const char* name, i32 val) -> void;
+		auto setUniformMat4(const char* name, glm::mat4& val) -> void;
+		auto setUniformVec3(const char* name, glm::vec3& val) -> void;
+		auto setUniformVec4(const char* name, glm::vec4 val) -> void;
+		auto setTexture(const char* name, const ui32 textureID, const ui32 texSlot) -> void;
+
+		static std::unique_ptr<shader> create(const std::string& vertShaderPath, const std::string& fragShaderPath)
+		{
+			//TODO: handle graphics API based shaders
+			return std::make_unique<shader>(vertShaderPath, fragShaderPath);
+		}
 
 	private:
 

@@ -4,6 +4,7 @@
 #include <filesystem>
 
 #include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "shader.h"
 #include "core/core.h"
@@ -66,6 +67,38 @@ namespace ray3D
 		glUseProgram(mShaderID);
 	}
 
+	auto shader::setUniformFloat(const char* name, f32 val) -> void
+	{
+		glUniform1f(glGetUniformLocation(mShaderID, name), val);
+	}
+
+	auto shader::setUniformInt(const char* name, i32 val) -> void
+	{
+		glUniform1i(glGetUniformLocation(mShaderID, name), val);
+	}
+
+	auto shader::setUniformMat4(const char* name, glm::mat4& val) -> void
+	{
+		glUniformMatrix4fv(glGetUniformLocation(mShaderID, name), 1, GL_FALSE, glm::value_ptr(val));
+	}
+
+	auto shader::setUniformVec3(const char* name, glm::vec3& val) -> void
+	{
+		glUniform3f(glGetUniformLocation(mShaderID, name), val.x, val.y, val.z);
+	}
+
+	auto shader::setUniformVec4(const char* name, glm::vec4 val) -> void
+	{
+		glUniform4f(glGetUniformLocation(mShaderID, name), val.x, val.y, val.z, val.w);
+	}
+
+	auto shader::setTexture(const char* name, const ui32 textureID, const ui32 texSlot) -> void
+	{
+		glActiveTexture(GL_TEXTURE0 + texSlot);
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		setUniformInt(name, GL_TEXTURE0 + texSlot);
+	}
+
 	uint32_t shader::compileShader(const std::string& shaderFilePath, const shaderType shaderType)
 	{
 		GLuint ShaderID = {};
@@ -79,10 +112,11 @@ namespace ray3D
 		}
 
 		GLuint glShaderType = 0;
+		std::string shderDebugName = "Null";
 		switch (shaderType)
 		{
-		case shaderType::Vertex: glShaderType = GL_VERTEX_SHADER; break;
-		case shaderType::Fragment: glShaderType = GL_FRAGMENT_SHADER; break;
+		case shaderType::Vertex: glShaderType = GL_VERTEX_SHADER; shderDebugName = "Vertex"; break;
+		case shaderType::Fragment: glShaderType = GL_FRAGMENT_SHADER; shderDebugName = "Fragment"; break;
 		default:
 			break;
 		}
@@ -109,7 +143,7 @@ namespace ray3D
 		if (!status)
 		{
 			glGetShaderInfoLog(ShaderID, shaderCompilationLog.size(), nullptr, shaderCompilationLog.data());
-			R3D_LOGE("Vertex Shader Compilation Error : %s", shaderCompilationLog.data());
+			R3D_LOGE("{} Shader Compilation Error : {}", shderDebugName, shaderCompilationLog.data());
 			return 0;
 		}
 

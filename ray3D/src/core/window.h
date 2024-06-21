@@ -44,11 +44,12 @@ namespace ray3D
 		auto updateInput() -> void;
 		auto swapBuffers() -> void;
 
-	private:
-		std::string mTitle = {};
+	protected:
 		ui32 mWidth = {};
 		ui32 mHeight = {};
 
+	private:
+		std::string mTitle = {};
 		GLFWwindow* mWindow = {};
 	};
 }

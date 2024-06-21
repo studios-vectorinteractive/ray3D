@@ -22,6 +22,11 @@ namespace ray3D
 		static inline bool mInitialized = false;
 		static inline std::shared_ptr<spdlog::logger> mLogger = {};
 	};
+
+	inline void report_assertion_failure(const char* expression, const char* message, const char* file, int line)
+	{
+		logger::getLogger()->critical("{} Failed : Message - {} in file : {} at {}", expression, message, file, line);
+	}
 }
 
 #ifdef _DEBUG

@@ -78,18 +78,18 @@ namespace ray3D
 	class mouseScrollEvent : public event
 	{
 	public:
-		mouseScrollEvent(const f64 XOffset, const f64 YOffset) :mXOffset(_ui32(XOffset)), mYOffset(_ui32(YOffset)) {};
+		mouseScrollEvent(const f64 XOffset, const f64 YOffset) :mXOffset(_i32(XOffset)), mYOffset(_i32(YOffset)) {};
 		virtual ~mouseScrollEvent() = default;
 
 		virtual auto getEventType() -> eventType override { return eventType::mouseScrollEvent; }
 
-		auto getXOffset() const -> ui32 { return mXOffset; }
-		auto getYOffset() const -> ui32 { return mYOffset; }
-		auto getXYOffset() const -> glm::vec<2, ui32> { return glm::vec<2, ui32>(mXOffset, mYOffset); }
+		auto getXOffset() const -> i32 { return mXOffset; }
+		auto getYOffset() const -> i32 { return mYOffset; }
+		auto getXYOffset() const -> glm::vec<2, i32> { return glm::vec<2, i32>(mXOffset, mYOffset); }
 
 	private:
-		ui32 mXOffset = {};
-		ui32 mYOffset = {};
+		i32 mXOffset = {};
+		i32 mYOffset = {};
 	};
 
 	class keyPressedEvent : public event

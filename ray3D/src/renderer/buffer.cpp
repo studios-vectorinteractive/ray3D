@@ -7,6 +7,7 @@ namespace ray3D
         mAttribLayout(vertAttribsLayout::getLayout(attribLayoutType))
     {
         mVertices = std::move(vertBuffer);
+        auto data = mVertices.data();
         ui32 stride = mAttribLayout.getStride();
 
         glGenBuffers(1, &mVertBufferID);
@@ -40,7 +41,7 @@ namespace ray3D
 
     indexBuffer::indexBuffer(std::vector<ui32>& indexBuffer)
     {
-        mIndices = std::move(indexBuffer);
+        mIndices = indexBuffer;
         mIndexCount = mIndices.size();
 
         glGenBuffers(1, &mIndexBufferID);
